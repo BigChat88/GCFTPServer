@@ -1,0 +1,47 @@
+name: Build
+
+on:
+  push:
+    branches: ["**"]
+    tags: ["v*"]
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: write  # needed to publish releases on tags
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    container:
+      # Pinned to the image with libogc2 commit f8f62e1, which netstack/ was
+      # taken from (it uses libogc2 internal headers). Keep in sync with
+      # build.ps1.
+      image: ghcr.io/extremscorner/libogc2@sha256:95440883dc298ea316dd46edfc0b1af10af63c6492b1f52b35081f47320ca635
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Build
+        run: make
+
+      - name: Package
+        run: |
+          mkdir -p dist/gcftpserver
+          cp gcftpserver.dol gcftp.ini.example README.md dist/gcftpserver/
+          cd dist && zip -r gcftpserver.zip gcftpserver
+
+      - name: Upload artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: gcftpserver
+          path: dist/gcftpserver/
+
+      - name: Publish release
+        if: startsWith(github.ref, 'refs/tags/v')
+        uses: softprops/action-gh-release@v2
+        with:
+          files: |
+            dist/gcftpserver.zip
+            gcftpserver.dol
+          generate_release_notes: true

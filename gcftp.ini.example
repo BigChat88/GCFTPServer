@@ -1,0 +1,15 @@
+# GC FTP Server - copy this file as gcftp.ini to the root of a mounted device
+# (sd:/, carda:/, cardb:/ or gcloader:/). Every key is optional.
+
+# Login. Default user is "cube"; leave "user" empty for anonymous access.
+# If "pass" is empty, any password is accepted.
+#user = cube
+#pass = changeme
+
+# Control port (default 21)
+#port = 21
+
+# Static IP. If "ip" is empty, DHCP is used.
+#ip = 192.168.1.50
+#netmask = 255.255.255.0
+#gateway = 192.168.1.1
