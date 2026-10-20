@@ -57,17 +57,6 @@ Measured with the official Broadband Adapter at 100 Mbit/s, an SD2SP2, and FileZ
 
 Downloads are close to the limit of the EXI bus. Uploads are limited by the BBA's tiny receive buffer (see below), which makes them sensitive to network latency. A wired PC should upload faster than WiFi.
 
-## Download
-
-Every push builds the DOL on GitHub Actions. The result can be downloaded from the run's **Artifacts** section (requires a GitHub login).
-
-Pushing a tag such as `v1.0.0` also publishes a **Release** with `gcftpserver.dol` and a zip containing the DOL, the README and the example config:
-
-```sh
-git tag v1.0.0
-git push origin v1.0.0
-```
-
 ## Building
 
 **With Docker** (no devkitPro install needed):
@@ -99,3 +88,8 @@ The stack uses libogc2 internal headers, so it must match the libogc2 it is buil
 - No TLS: use it on your local network only.
 - `ABOR` does not interrupt a transfer in progress.
 - The network can only be initialized once per boot. If it fails, restart the DOL.
+
+## AI Note
+
+The application was developed using AI. I'm just an enthusiast who wanted to create interesting projects. In this case, how it was achieved is not relevant to me.
+
